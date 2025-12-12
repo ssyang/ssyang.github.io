@@ -1,0 +1,15 @@
+{
+  "name": "김개발",
+  "role": "프론트엔드 엔지니어",
+  "bio": "Next.js와 Tailwind를 사랑합니다.",
+  "social": [
+    { "name": "GitHub", "url": "https://github.com/ssyang", "icon": "github" }
+  ],
+  "projects": [
+    {
+      "title": "포트폴리오 v2",
+      "description": "Next.js App Router + Tailwind + GitHub DB",
+      "link": "https://https://ssyang.github.io/"
+    }
+  ]
+}
