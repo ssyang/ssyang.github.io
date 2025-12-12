@@ -1,30 +1,31 @@
-import Image from "next/image";
+'use client';
 
-type Social = { name: string; url: string; icon: string };
-type Project = { title: string; description: string; link?: string };
+import { useState, useEffect } from 'react';
 
 type HomeData = {
   name: string;
   role: string;
   bio: string;
-  social: Social[];
-  projects: Project[];
+  social: { name: string; url: string }[];
+  projects: { title: string; description: string; link?: string }[];
 };
 
-async function getData(): Promise<HomeData> {
-  const res = await fetch(
-    "https://raw.githubusercontent.com/본인아이디/my-homepage/main/src/data/data.json",
-    {
-      next: { revalidate: 60 }, // 60초마다 재검증 (선택사항
-    }
-  );
+export default function Home() {
+  const [data, setData] = useState<HomeData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!res.ok) throw new Error("Failed to fetch data");
-  return res.json();
-}
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/ssyang/ssyang.github.io/main/src/data/data.json')
+      .then(res => res.json())
+      .then(json => {
+        setData(json);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
-export default async function Home() {
-  const data = await getData();
+  if (loading) return <div className="text-center py-20 text-2xl">로딩 중...</div>;
+  if (!data) return <div className="text-center py-rouge-500">데이터 로드 실패</div>;
 
   return (
     <>
